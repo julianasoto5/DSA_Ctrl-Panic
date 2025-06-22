@@ -1,0 +1,8 @@
+services:
+
+  web: 
+      build: tpi_python/www
+      ports:
+        - "15000:5000"
+      environment:
+        - FLAG="flag{v4m05_p1nch4_7-0}"
