@@ -27,10 +27,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `accounts` (
+  `id` int(100) NOT NULL
   `username` varchar(100) NOT NULL,
   `password` varchar(600) NOT NULL,
   `club` varchar(100) NOT NULL,
-  `id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
