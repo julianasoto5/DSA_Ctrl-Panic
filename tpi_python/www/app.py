@@ -45,7 +45,7 @@ def login():
             if usuario_bd["usuario"] == usuario and usuario_bd["contrasena"] == contrasena:
                 return redirect(url_for("perfil", id=usuario_bd["id"]))
         error = "Nombre de usuario o contraseña incorrectos"
-    return render_template("login.html", error=error)
+    return render_template("index.html", error=error)
 
 
 # Renderiza la página de perfil
@@ -63,7 +63,7 @@ def perfil(id):
         usuario_bd["nombre"] = request.form["nombre"]
         usuario_bd["club"] = request.form["club"]
         return redirect(url_for("perfil", id=id))
-    return render_template("perfil.html", usuario=usuario_bd)
+    return render_template("perfil.html", usuario_actual=usuario_bd)
 
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", debug=True)
