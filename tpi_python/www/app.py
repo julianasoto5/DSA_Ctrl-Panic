@@ -16,7 +16,8 @@ def elegir_club():
     return random.choice(clubes)
 
 USUARIOS = [{"id": 1, "usuario": "user", "contrasena": "pass", "apellido": "Panic", "nombre": "Ctrl", "club": clubes[0]},
-            {"id": random.randint(31,100), "usuario": "admin", "contrasena": generar_contrasena(8), "apellido": "Tengo la flag", "nombre": "Flagger", "club": os.environ.get("FLAG")}]
+            {"id": random.randint(32,100), "usuario": "admin", "contrasena": generar_contrasena(8), "apellido": "Tengo una flag", "nombre": "Flagger", "club": os.environ.get("FLAG1")},
+            {"id": 31,"usuario": "DSA","contrasena": "123456789", "apellido": "Segurisimo", "nombre": "Seguridad","club": os.environ.get("FLAG2")}]
 
 for i in range(1,30):
     usuario = {}
@@ -38,17 +39,14 @@ def index():
 def login():
     error = None
     if request.method == "POST":
-        print("Se recibió un POST")
-
         usuario = request.form["usuario"]
         contrasena = request.form["contrasena"]
-        if usuario == "admin":
-            print(contrasena)
         for usuario_bd in USUARIOS:
             if usuario_bd["usuario"] == usuario and usuario_bd["contrasena"] == contrasena:
                 return redirect(url_for("perfil", id=usuario_bd["id"]))
-        error = "Invalid credentials"
-    return render_template("index.html", error=error)
+        error = "Nombre de usuario o contraseña incorrectos"
+    return render_template("login.html", error=error)
+
 
 # Renderiza la página de perfil
 @app.route("/perfil/<int:id>", methods=["GET", "POST"])
@@ -68,5 +66,5 @@ def perfil(id):
     return render_template("perfil.html", usuario=usuario_bd)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host = "0.0.0.0", debug=True)
 

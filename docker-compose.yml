@@ -1,8 +1,14 @@
+version: "3"
 services:
-
   web: 
-      build: tpi_python/www
-      ports:
-        - "15000:5000"
-      environment:
-        - FLAG="flag{v4m05_p1nch4_7-0}"
+    container_name: tpi_python
+    build: ./tpi_python/www
+    restart: always
+    ports:
+      - "15000:5000"
+    environment:
+      - FLAG1=flag{v4m05_p1nch4_7-0}
+      - FLAG2=flag{fu4_r3_f4c1l_35t0}
+    volumes:
+      - ./tpi_python/www/app.py:/www/app.py:ro
+      - ./tpi_python/www/templates:/www/templates:ro

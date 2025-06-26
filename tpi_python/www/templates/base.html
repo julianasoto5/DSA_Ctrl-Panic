@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}{{ titulo | default("Mi Aplicación") }}{% endblock %}</title>
+    <title>{% block title %}{{ titulo | default("App by Ctrl+Panic") }}{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
   </head>
   <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{{ url_for('index') }}">Mi Aplicación</a>
+      <a class="navbar-brand" href="{{ url_for('index') }}">Ctrl+Panic</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -34,6 +34,9 @@
               <a class="nav-link" href="{{ url_for('login') }}">Registrarse</a>
             </li>
           {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index') }}">Buscar club</a>
+          </li>
         </ul>
       </div>
     </nav>

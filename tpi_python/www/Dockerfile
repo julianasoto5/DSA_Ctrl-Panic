@@ -1,17 +1,19 @@
-FROM python:3.9-alpine
+FROM python:3.6.6-alpine3.8
 
-WORKDIR /app
+ENV FLASK_APP=/www/app.py
+ENV FLASK_DEBUG=1
+ENV FLASK_RUN_PORT=5000
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
+# Create directory and copy files
+WORKDIR /www
 COPY . .
 
-ENV FLASK_APP=app.py
-ENV FLASK_ENV=development
+# Install dependencies first (better practice)
+RUN pip install -r requirements.txt
 
+# Make entrypoint executable
+RUN chmod +x entrypoint.sh
 
-#CMD ["flask", "run", "--host=0.0.0.0"]
-CMD ["flask", "--app=app.py", "--debug", "run", "--host=0.0.0.0"]
+EXPOSE 5000
 
-
+ENTRYPOINT [ "/www/entrypoint.sh" ]
