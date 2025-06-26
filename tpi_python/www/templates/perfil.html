@@ -2,9 +2,9 @@
 
 {% block content %}
   <div class="container mt-3">
-    <h1>Perfil de {{ usuario.usuario }}</h1>
-    <p>Nombre: {{ usuario.nombre }}</p>
-    <p>Apellido: {{ usuario.apellido }}</p>
-    <p>Club: {{ usuario.club }}</p>
+    <h1>Perfil de {{ usuario_actual.usuario }}</h1>
+    <p>Nombre: {{ usuario_actual.nombre }}</p>
+    <p>Apellido: {{ usuario_actual.apellido }}</p>
+    <p>Club: {{ usuario_actual.club }}</p>
   </div>
 {% endblock %}
