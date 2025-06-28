@@ -23,28 +23,32 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `accounts`
+-- Estructura de tabla para la tabla `clubs`
 --
 
-CREATE TABLE `accounts` (
-  `id` int(100) NOT NULL
-  `username` varchar(100) NOT NULL,
-  `password` varchar(600) NOT NULL,
-  `club` varchar(100) NOT NULL,
+CREATE TABLE `clubs` (
+  `id` int(100) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `partidos` varchar(600) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `accounts`
+-- Volcado de datos para la tabla `clubs`
 --
 
-INSERT INTO `accounts` (`username`, `password`, `id`) VALUES
-('admin', '111fca2d52def4c33f4d8f1be7e74d14b65d365e5ddb91610c3c0dbecc192073b0b0df28213e3828cc0321f6286baf94449a4f8803203be3293595f4d67ff7e2', 'Estudiantes de La Plata', 1);
-
+INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+('Estudiantes de La Plata', '1', 1);
+INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+('Boca Juniors', '1', 2);
+INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+('Racing Club', '1', 3);
+INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+('flag', '1', 37);
 -- --------------------------------------------------------
 --
--- Indices de la tabla `accounts`
+-- Indices de la tabla `clubs`
 --
-ALTER TABLE `accounts`
+ALTER TABLE `clubs`
   ADD UNIQUE KEY `id` (`id`);
 
 
