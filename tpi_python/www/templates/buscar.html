@@ -13,9 +13,9 @@
   {% if resultados is not none %}
     <h3>Resultados:</h3>
     <ul>
-      {% for usuario in resultados %}
-        <li>{{ usuario.username }} - {{ usuario.club }}</li>
-      {% endfor %}
+       {% for club in resultados %}
+          <li>{{ club.nombre }} - Partidos: {{ club.partidos }}</li>
+       {% endfor %}
     </ul>
   {% endif %}
 {% endblock %}
