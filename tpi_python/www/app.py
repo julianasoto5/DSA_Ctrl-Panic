@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from database import Database
 import random
 import string
 import base64
@@ -67,4 +68,13 @@ def perfil(id):
 
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", debug=True)
+
+@app.route("/buscar", methods=["GET"])
+def buscar():
+    resultados = None
+    if "club" in request.args:
+        club = request.args.get("club")
+        db = Database()
+        resultados = db.buscar_por_club(club)  # <-- función nueva que agregás ahora
+    return render_template("buscar.html", resultados=resultados)
 
