@@ -18,16 +18,17 @@ class Database(object):
         Session = sessionmaker(bind=engine)        
         session = Session()
         return session
-
-    def get_user_by_id(self, idUser):
+        
+    def buscar_por_club(self, club_name):
         connection = 'mysql+mysqlconnector://%s:%s@%s:%s/%s' % (self.db_user,self.db_pass,self.db_host,self.db_port,self.db_name)
         engine = create_engine(connection)
         connection = engine.connect()
-        session = self.get_session()
-        sql = "SELECT * FROM acounts WHERE id = '" + (str(idUser)) + "';"
-        result=connection.execute(sql).fetchall()
-        session.close()
-        lista=[]
+    
+        # INYECCIÓN SQL INTENCIONAL
+        sql = f"SELECT * FROM clubs WHERE nombre = '{club_name}'"
+    
+        result = connection.execute(sql).fetchall()
+        lista = []
         for r in result:
-            lista.append({'id': r[0], 'username':r[1],'password':r[2],'club':r[3],})
-        return lista 
+            lista.append({'id': r[0], 'nombre': r[1], 'partidos': r[2]})
+        return lista
