@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Buscar club</h2>
+  <form method="GET" action="{{ url_for('buscar') }}">
+    <div class="form-group">
+      <label for="club">Nombre del club:</label>
+      <input type="text" name="club" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Buscar</button>
+  </form>
+
+  {% if resultados is not none %}
+    <h3>Resultados:</h3>
+    <ul>
+      {% for usuario in resultados %}
+        <li>{{ usuario.username }} - {{ usuario.club }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}
