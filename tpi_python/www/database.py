@@ -1,5 +1,5 @@
 import base64
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 import os
 
@@ -27,7 +27,7 @@ class Database(object):
         # INYECCIÓN SQL INTENCIONAL
         sql = f"SELECT * FROM clubs WHERE nombre = '{club_name}'"
     
-        result = connection.execute(sql).fetchall()
+        result = connection.execute(text(sql)).fetchall()
         lista = []
         for r in result:
             lista.append({'id': r[0], 'nombre': r[1], 'partidos': r[2]})
