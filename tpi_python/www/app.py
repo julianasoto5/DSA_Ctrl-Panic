@@ -66,9 +66,6 @@ def perfil(id):
         return redirect(url_for("perfil", id=id))
     return render_template("perfil.html", usuario_actual=usuario_bd)
 
-if __name__ == "__main__":
-    app.run(host = "0.0.0.0", debug=True)
-
 @app.route("/buscar", methods=["GET"])
 def buscar():
     resultados = None
@@ -77,4 +74,7 @@ def buscar():
         db = Database()
         resultados = db.buscar_por_club(club)  # <-- función nueva que agregás ahora
     return render_template("buscar.html", resultados=resultados)
+
+if __name__ == "__main__":
+    app.run(host = "0.0.0.0", debug=True)
 
