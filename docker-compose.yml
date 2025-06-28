@@ -12,3 +12,16 @@ services:
     volumes:
       - ./tpi_python/www/app.py:/www/app.py:ro
       - ./tpi_python/www/templates:/www/templates:ro
+      - ./tpi_python/www/database.py:/www/database.py:ro 
+      
+   db:
+    container_name: mysqldb-p3
+    image: mysql:5.7
+    restart: always
+    environment:
+        MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+        MYSQL_DATABASE: "wally"
+        MYSQL_USER: "example"
+        MYSQL_PASSWORD: "example"
+    volumes:
+      - "./python_sqli/database/:/docker-entrypoint-initdb.d"
