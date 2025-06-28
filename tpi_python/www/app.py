@@ -1,4 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
+from database import Database
+import os
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.sql import text
+from sqlalchemy.sql import select
 import random
 import string
 import base64
@@ -64,6 +71,15 @@ def perfil(id):
         usuario_bd["club"] = request.form["club"]
         return redirect(url_for("perfil", id=id))
     return render_template("perfil.html", usuario_actual=usuario_bd)
+
+@app.route("/buscar", methods=["GET"])
+def buscar():
+    resultados = None
+    if "club" in request.args:
+        club = request.args.get("club")
+        db = Database()
+        resultados = db.buscar_por_club(club)  # <-- función nueva que agregás ahora
+    return render_template("buscar.html", resultados=resultados)
 
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", debug=True)
