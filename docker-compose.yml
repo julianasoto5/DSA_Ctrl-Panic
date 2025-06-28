@@ -9,19 +9,27 @@ services:
     environment:
       - FLAG1=flag{v4m05_p1nch4_7-0}
       - FLAG2=flag{fu4_r3_f4c1l_35t0}
+      - DB_USER=example
+      - DB_PASS=example
+      - DB_HOST=db
+      - DB_NAME=wally
+      - DB_PORT=3306
+    depends_on:
+      - db
     volumes:
       - ./tpi_python/www/app.py:/www/app.py:ro
+      - ./tpi_python/www/database.py:/www/database.py:ro
+      - ./tpi_python/www/entrypoint.sh:/www/entrypoint.sh:ro
       - ./tpi_python/www/templates:/www/templates:ro
-      - ./tpi_python/www/database.py:/www/database.py:ro 
-      
-   db:
+
+  db:
     container_name: mysqldb-p3
     image: mysql:5.7
     restart: always
     environment:
-        MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-        MYSQL_DATABASE: "wally"
-        MYSQL_USER: "example"
-        MYSQL_PASSWORD: "example"
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: "wally"
+      MYSQL_USER: "example"
+      MYSQL_PASSWORD: "example"
     volumes:
-      - "./python_sqli/database/:/docker-entrypoint-initdb.d"
+      - ./tpi_python/database/wally.sql:/docker-entrypoint-initdb.d/wally.sql:ro
