@@ -12,7 +12,7 @@ COPY . .
 RUN pip install -r requirements.txt
 
 # Make entrypoint executable
-RUN chmod +x entrypoint.sh
+RUN chmod +x /www/entrypoint.sh
 
 EXPOSE 5000
 
