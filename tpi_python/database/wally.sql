@@ -1,4 +1,4 @@
-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
@@ -35,15 +35,14 @@ CREATE TABLE `clubs` (
 --
 -- Volcado de datos para la tabla `clubs`
 --
-
 INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
 ('Estudiantes de La Plata', '1', 1);
 INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
 ('Boca Juniors', '1', 2);
 INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
 ('Racing Club', '1', 3);
-INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
-('flag', '1', 37);
+/*INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+('Flagger', os.environ.get("FLAG"), 37);*/
 -- --------------------------------------------------------
 --
 -- Indices de la tabla `clubs`

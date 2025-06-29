@@ -24,7 +24,7 @@ def elegir_club():
 
 USUARIOS = [{"id": 1, "usuario": "user", "contrasena": "pass", "apellido": "Panic", "nombre": "Ctrl", "club": clubes[0]},
             {"id": random.randint(32,100), "usuario": "admin", "contrasena": generar_contrasena(8), "apellido": "Tengo una flag", "nombre": "Flagger", "club": os.environ.get("FLAG1")},
-            {"id": 31,"usuario": "DSA","contrasena": "123456789", "apellido": "Segurisimo", "nombre": "Seguridad","club": os.environ.get("FLAG2")}]
+            {"id": 31,"usuario": "DSA","contrasena": "123456789", "apellido": "Segurisima", "nombre": "Seguridad","club": os.environ.get("FLAG2")}]
 
 for i in range(1,30):
     usuario = {}
@@ -78,7 +78,7 @@ def buscar():
     if "club" in request.args:
         club = request.args.get("club")
         db = Database()
-        resultados = db.buscar_por_club(club)  # <-- función nueva que agregás ahora
+        resultados = db.buscar_por_club(club) 
     return render_template("buscar.html", resultados=resultados)
 
 if __name__ == "__main__":
