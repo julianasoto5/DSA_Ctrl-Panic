@@ -10,12 +10,17 @@
     <button type="submit" class="btn btn-primary">Buscar</button>
   </form>
 
-  {% if resultados is not none %}
-    <h3>Resultados:</h3>
-    <ul>
-       {% for club in resultados %}
-          <li>{{ club.nombre }} - Partidos: {{ club.partidos }}</li>
-       {% endfor %}
-    </ul>
-  {% endif %}
+<h3>Resultados:</h3>
+
+{% if resultados is not none %}
+    {% if resultados %}
+        <ul>
+        {% for r in resultados %}
+            <li>{{ r.nombre }} - {{ r.partidos }} partidos</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p style="color: red;">No se encontraron clubes con ese nombre.</p>
+    {% endif %}
+{% endif %}
 {% endblock %}

@@ -24,10 +24,8 @@ class Database(object):
         engine = create_engine(connection)
         connection = engine.connect()
     
-        # INYECCIÓN SQL INTENCIONAL
-        sql = f"SELECT * FROM clubs WHERE nombre = '{club_name}'"
-    
-        result = connection.execute(text(sql)).fetchall()
+        sql = text("SELECT * FROM clubs WHERE nombre = :club_name")
+        result = connection.execute(sql, {"club_name": club_name}).fetchall()
         lista = []
         for r in result:
             lista.append({'id': r[0], 'nombre': r[1], 'partidos': r[2]})

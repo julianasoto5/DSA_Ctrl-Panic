@@ -18,12 +18,19 @@
               <label for="password">Password:</label>
               <input type="password" name="contrasena" class="form-control" required>
             </div>
+
+             <!-- reCAPTCHA -->
+            <div class="g-recaptcha" data-sitekey="6Ld0EHIrAAAAAN2HGJ4HRrkKLJqLSOFr5j-Xag_c"></div>
             <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+
+             <script src="https://www.google.com/recaptcha/api.js"></script>
+
             {% if error %}
                 <div class="alert alert-danger mt-3">{{ error }}</div>
             {% endif %}
 
-          </form>
+          
         </div>
       </div>
     </div>
