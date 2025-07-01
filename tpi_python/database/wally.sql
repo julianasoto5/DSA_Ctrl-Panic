@@ -37,11 +37,21 @@ CREATE TABLE `clubs` (
 --
 
 INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
-('Estudiantes de La Plata', '1', 1);
+('Estudiantes de La Plata', 'La Plata', 1);
 INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
-('Boca Juniors', '1', 2);
+('Boca Juniors', 'Buenos Aires', 2);
 INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
-('Racing Club', '1', 3);
+('River Plate', 'Buenos Aires', 3);
+INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+('Racing Club', 'Avellaneda', 4);
+INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+('Independiente', 'Avellaneda', 5);
+INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+('San Lorenzo', 'Buenos Aires', 6);
+INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+('Vélez Sarsfield', 'Buenos Aires', 7);
+INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+('Newell', 'Rosario', 8);
 INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
 ('flag', '1', 37);
 -- --------------------------------------------------------
