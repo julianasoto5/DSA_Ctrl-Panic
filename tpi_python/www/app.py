@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from flask import jsonify
 from database import Database
 import os
 from sqlalchemy import create_engine
@@ -6,15 +7,20 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import text
 from sqlalchemy.sql import select
+
+from sqlalchemy.exc import ProgrammingError
 import random
 import string
 import base64
 import os
+import requests
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)  # Necesario para usar sesiones
+
 clubes = ["Estudiantes de La Plata", "Boca Juniors", "River Plate", "Racing Club", "Independiente", "San Lorenzo", "Vélez Sarsfield", "Newell"]
-paso1=0
-paso2=0    
+RECAPTCHA_SECRET_KEY = '6Ld0EHIrAAAAANo67b4KNnxRKnpUwWdfXqTkLdl8'
+
 
 def generar_contrasena(longitud):
     caracteres = string.ascii_letters + string.digits
@@ -48,10 +54,24 @@ def index():
 def login():
     error = None
     if request.method == "POST":
+        captcha_response = request.form.get('g-recaptcha-response')
+        if not captcha_response:
+            return render_template('index.html', error="Captcha no completado")
+
+        # Validar con Google
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data={
+            'secret': RECAPTCHA_SECRET_KEY,
+            'response': captcha_response
+        })
+        result = r.json()
+        if not result.get('success'):
+            return render_template('index.html', error="Captcha inválido")
+            
         usuario = request.form["usuario"]
         contrasena = request.form["contrasena"]
         for usuario_bd in USUARIOS:
             if usuario_bd["usuario"] == usuario and usuario_bd["contrasena"] == contrasena:
+                session["user_id"] = usuario_bd["id"]  # Guarda en el objeto session
                 return redirect(url_for("perfil", id=usuario_bd["id"]))
 
         error = "Credenciales inválidas. Por favor, inténtalo de nuevo."
@@ -61,6 +81,8 @@ def login():
 # Renderiza la página de perfil
 @app.route("/perfil/<int:id>", methods=["GET", "POST"])
 def perfil(id):
+    if "user_id" not in session or session["user_id"] != id:       #Comprueba que el usuario al que se quiere acceder es el logueado 
+            return redirect(url_for('index'))
     usuario_bd = None
     for usuario in USUARIOS:
         if usuario["id"] == id:
@@ -90,6 +112,16 @@ def buscar():
         db = Database()
         resultados = db.buscar_por_club(club) 
     return render_template("buscar.html", resultados=resultados)
+
+
+
+@app.errorhandler(500)
+def handle_server_error(e):
+    return "Ocurrió un error interno. Por favor, intenta nuevamente.", 500
+
+@app.errorhandler(ProgrammingError)
+def handle_sql_error(e):
+    return "Solicitud inválida.", 400
     
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", debug=True)
