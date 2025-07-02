@@ -26,9 +26,9 @@ def elegir_club():
 
 USUARIOS = [{"id": 1, "usuario": "user", "contrasena": "pass", "apellido": "Panic", "nombre": "Ctrl", "club": clubes[0]},
             {"id": random.randint(32,100), "usuario": "admin", "contrasena": generar_contrasena(8), "apellido": "Tengo una flag", "nombre": "Flagger", "club": os.environ.get("FLAG1")},
-            {"id": random.randint(100,110),"usuario": "DSA","contrasena": "123456789", "apellido": "Segurisimo", "nombre": "Seguridad","club": os.environ.get("FLAG2")}]
+            {"id": 2,"usuario": "DSA","contrasena": "123456789", "apellido": "Segurisimo", "nombre": "Seguridad","club": os.environ.get("FLAG2")}]
 
-for i in range(1,30):
+for i in range(2,30):
     usuario = {}
     usuario["id"] = i+1
     usuario["usuario"] = "usuario" + str(i + 1)
@@ -52,18 +52,9 @@ def login():
         contrasena = request.form["contrasena"]
         for usuario_bd in USUARIOS:
             if usuario_bd["usuario"] == usuario and usuario_bd["contrasena"] == contrasena:
-                if usuario == "admin":
-                    session["paso1"] = True  # Marcar que pasó por admin
-                    return redirect(url_for("perfil", id=usuario_bd["id"]))
-                elif usuario == "DSA":
-                    if not session.get("paso1"):  # Si no pasó por admin primero
-                        usuario_bd["club"] = os.environ.get("WARNING")
-                    else:
-                        session["paso2"] = True  # Marcar que pasó por DSA
-                        usuario_bd["club"] = os.environ.get("FLAG2")
-                    return render_template("perfil.html", usuario_actual=usuario_bd)
                 return redirect(url_for("perfil", id=usuario_bd["id"]))
-        error = "Nombre de usuario o contraseña incorrectos"
+
+        error = "Credenciales inválidas. Por favor, inténtalo de nuevo."
     return render_template("index.html", error=error)
 
 
@@ -81,44 +72,25 @@ def perfil(id):
     if request.method == "POST":
         usuario_bd["nombre"] = request.form["nombre"]
         usuario_bd["club"] = request.form["club"]
-        return redirect(url_for("perfil", id=id))
+        return redirect(url_for("perfil", id=id))         
+    if usuario_bd["usuario"] == "admin":
+        return render_template( "perfil.html", usuario_actual=usuario_bd, comment=os.environ.get("COMMENT_ADMIN") )
+    elif usuario_bd["usuario"] == "DSA":
+        return render_template("perfil.html", usuario_actual=usuario_bd, comment=os.environ.get("COMMENT_DSA"))
+    elif usuario_bd["usuario"] == "user":
+        return render_template("perfil.html", usuario_actual=usuario_bd, comment=os.environ.get("COMMENT_USER"))
+                   
     return render_template("perfil.html", usuario_actual=usuario_bd)
 
 @app.route("/buscar", methods=["GET"])
 def buscar():
     resultados = None
-    pasos_completos = False
     if "club" in request.args:
-        club = request.args.get("club", "")
+        club = request.args.get("club")
         db = Database()
-        
-        # Verificar si completó los pasos
-        pasos_completos = session.get('paso1') and session.get('paso2')
-        
-        # Detectar intentos de SQLi (patrones comunes)
-        intento_sqli = any(
-            keyword in club.upper() 
-            for keyword in ["' OR ", "--", "1=1", "UNION", "/*"]
-        )
-        
-        if intento_sqli:
-            if pasos_completos:
-                # Permitir ver toda la tabla (incluyendo flag)
-                resultados = db.buscar_por_club("' OR 1=1 -- ", mostrar_flag=True)
-            else:
-                # Engañar al atacante con datos falsos
-                resultados = [{
-                    'id': 0,
-                    'nombre': 'Tenemos un plan aquí che',
-                    'partidos': os.environ.get("WARNING")
-                }]
-        else:
-            # Búsqueda normal (filtra flag si no hay permisos)
-            resultados = db.buscar_por_club(club, mostrar_flag=pasos_completos)
+        resultados = db.buscar_por_club(club) 
+    return render_template("buscar.html", resultados=resultados)
     
-    return render_template("buscar.html", 
-                        resultados=resultados,
-                        pasos_completos=pasos_completos)
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", debug=True)
 

@@ -2,7 +2,7 @@ import base64
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 import os
-flag = os.environ.get("FLAG")
+flag = os.environ.get("FLAG3")
 class Database(object):
     db_user = os.getenv("DB_USER") if os.getenv("DB_USER") != None else "example"
     db_pass = os.getenv("DB_PASS") if os.getenv("DB_PASS") != None else "example"
@@ -21,10 +21,10 @@ class Database(object):
             self.connection.execute(text(sql))
          
         self.connection.execute(text("""
-        INSERT INTO clubs (nombre, partidos, id) 
-        VALUES (:nombre, :partidos, :id)"""), {
+        INSERT INTO clubs (nombre, ciudad, id) 
+        VALUES (:nombre, :ciudad, :id)"""), {
         'nombre': 'Flagger',
-        'partidos': flag,
+        'ciudad': flag,
         'id': 37
         })
 
@@ -38,18 +38,16 @@ class Database(object):
         session = Session()
         return session
         
-    def buscar_por_club(self, club_name, mostrar_flag=False):
-        # Conexión a la base de datos (existente)
+    def buscar_por_club(self, club_name):
+        connection = 'mysql+mysqlconnector://%s:%s@%s:%s/%s' % (self.db_user,self.db_pass,self.db_host,self.db_port,self.db_name)
+        engine = create_engine(connection)
+        connection = engine.connect()
     
-        # Query base con parámetros seguros
-        query = "SELECT * FROM clubs WHERE nombre = :club_name"
-        params = {'club_name': club_name}
+        # INYECCIÓN SQL INTENCIONAL
+        sql = f"SELECT * FROM clubs WHERE nombre = '{club_name}'"
     
-        # Excluir flag si no está autorizado
-        if not mostrar_flag:
-            query += " AND id != 37"  # Filtra el club con la flag
-    
-         # Ejecutar con protección contra SQLi
-        result = self.connection.execute(text(query), params).fetchall()
-        
-        return [{'id': r[0], 'nombre': r[1], 'partidos': r[2]} for r in result]
+        result = connection.execute(text(sql)).fetchall()
+        lista = []
+        for r in result:
+            lista.append({'id': r[0], 'nombre': r[1], 'ciudad': r[2]})
+        return lista
