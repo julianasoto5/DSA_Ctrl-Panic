@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask import jsonify
+
 from database import Database
 import os
 from sqlalchemy import create_engine
@@ -8,7 +8,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import text
 from sqlalchemy.sql import select
 
-from sqlalchemy.exc import ProgrammingError
 import random
 import string
 import base64
@@ -115,13 +114,6 @@ def buscar():
 
 
 
-@app.errorhandler(500)
-def handle_server_error(e):
-    return "Ocurrió un error interno. Por favor, intenta nuevamente.", 500
-
-@app.errorhandler(ProgrammingError)
-def handle_sql_error(e):
-    return "Solicitud inválida.", 400
     
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", debug=True)
