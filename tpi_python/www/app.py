@@ -95,6 +95,13 @@ def perfil(id):
             usuario_bd["nombre"] = request.form["nombre"]
             usuario_bd["club"] = request.form["club"]
             return redirect(url_for("perfil", id=id))
+        if usuario_bd["usuario"] == "admin":
+            return render_template( "perfil.html", usuario_actual=usuario_bd, comment=os.environ.get("COMMENT_ADMIN") )
+        elif usuario_bd["usuario"] == "DSA":
+            return render_template("perfil.html", usuario_actual=usuario_bd, comment=os.environ.get("COMMENT_DSA"))
+        elif usuario_bd["usuario"] == "user":
+            return render_template("perfil.html", usuario_actual=usuario_bd, comment=os.environ.get("COMMENT_USER"))
+                
         return render_template("perfil.html", usuario_actual=usuario_bd)
 
 @app.route("/buscar", methods=["GET"])
