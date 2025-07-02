@@ -25,34 +25,35 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `clubs`
 --
+DROP TABLE IF EXISTS `clubs`;
 
 CREATE TABLE `clubs` (
   `id` int(100) NOT NULL,
   `nombre` varchar(100) NOT NULL,
-  `partidos` varchar(600) NOT NULL
+  `ciudad` varchar(600) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `clubs`
 --
 
-INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+INSERT INTO `clubs` (`nombre`, `ciudad`, `id`) VALUES
 ('Estudiantes de La Plata', 'La Plata', 1);
-INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+INSERT INTO `clubs` (`nombre`, `ciudad`, `id`) VALUES
 ('Boca Juniors', 'Buenos Aires', 2);
-INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+INSERT INTO `clubs` (`nombre`, `ciudad`, `id`) VALUES
 ('River Plate', 'Buenos Aires', 3);
-INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+INSERT INTO `clubs` (`nombre`, `ciudad`, `id`) VALUES
 ('Racing Club', 'Avellaneda', 4);
-INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+INSERT INTO `clubs` (`nombre`, `ciudad`, `id`) VALUES
 ('Independiente', 'Avellaneda', 5);
-INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
-('San Lorenzo', 'Buenos Aires', 6);
-INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
-('Vélez Sarsfield', 'Buenos Aires', 7);
-INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
-('Newell', 'Rosario', 8);
-INSERT INTO `clubs` (`nombre`, `partidos`, `id`) VALUES
+INSERT INTO `clubs` (`nombre`, `ciudad`, `id`) VALUES
+('San Lorenzo', 'Flores', 6);
+INSERT INTO `clubs` (`nombre`, `ciudad`, `id`) VALUES
+('Vélez Sarsfield', 'Liniers', 7);
+INSERT INTO `clubs` (`nombre`, `ciudad`, `id`) VALUES
+('Newells Old Boys ', 'Rosario', 8);
+INSERT INTO `clubs` (`nombre`, `ciudad`, `id`) VALUES
 ('flag', '1', 37);
 -- --------------------------------------------------------
 --
