@@ -6,5 +6,8 @@
     <p>Nombre: {{ usuario_actual.nombre }}</p>
     <p>Apellido: {{ usuario_actual.apellido }}</p>
     <p>Club: {{ usuario_actual.club }}</p>
+    {%if comment %}
+      <p> Comentario: {{ comment }}</p>
+    {% endif %}
   </div>
 {% endblock %}

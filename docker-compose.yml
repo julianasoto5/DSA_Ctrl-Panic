@@ -1,4 +1,3 @@
-version: "3"
 services:
   web: 
     container_name: tpi_python1
@@ -6,14 +5,8 @@ services:
     restart: always
     ports:
       - "15000:5000"
-    environment:
-      - FLAG1=flag{v4m05_p1nch4_7-0}
-      - FLAG2=flag{fu4_r3_f4c1l_35t0}
-      - DB_USER=example
-      - DB_PASS=example
-      - DB_HOST=db
-      - DB_NAME=wally
-      - DB_PORT=3306
+    env_file:
+      - ./tpi_python/config/.env
     depends_on:
       - db
     volumes:
@@ -22,9 +15,10 @@ services:
       - ./tpi_python/www/templates:/www/templates:ro
 
   db:
-    container_name: mysqldb-p3
+    container_name: mysqldb-tpi
     image: mysql:5.7
     restart: always
+    
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
       MYSQL_DATABASE: "wally"
