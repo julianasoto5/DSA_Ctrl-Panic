@@ -43,10 +43,3 @@ Adicionalmente, se pueden modificar las pistas de la página para conseguir la t
 - Vulnerabilidad SQL Injection: se debe realizar una inyección de SQL haciendo la siguiente búsqueda: 
 
 1' OR '1'='1
-
-
-## Código corregido
-
-SQL Injection --> 
-IDOR --> 
-Fuerza bruta --> captcha
