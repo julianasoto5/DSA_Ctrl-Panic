@@ -13,7 +13,9 @@ import os
 
 app = Flask(__name__)
 clubes = ["Estudiantes de La Plata", "Boca Juniors", "River Plate", "Racing Club", "Independiente", "San Lorenzo", "Vélez Sarsfield", "Newell"]
-    
+paso1=0
+paso2=0    
+
 def generar_contrasena(longitud):
     caracteres = string.ascii_letters + string.digits
     contrasena = ''.join(random.choice(caracteres) for i in range(longitud))
@@ -24,9 +26,9 @@ def elegir_club():
 
 USUARIOS = [{"id": 1, "usuario": "user", "contrasena": "pass", "apellido": "Panic", "nombre": "Ctrl", "club": clubes[0]},
             {"id": random.randint(32,100), "usuario": "admin", "contrasena": generar_contrasena(8), "apellido": "Tengo una flag", "nombre": "Flagger", "club": os.environ.get("FLAG1")},
-            {"id": 31,"usuario": "DSA","contrasena": "123456789", "apellido": "Segurisimo", "nombre": "Seguridad","club": os.environ.get("FLAG2")}]
+            {"id": 2,"usuario": "DSA","contrasena": "123456789", "apellido": "Segurisimo", "nombre": "Seguridad","club": os.environ.get("FLAG2")}]
 
-for i in range(1,30):
+for i in range(2,30):
     usuario = {}
     usuario["id"] = i+1
     usuario["usuario"] = "usuario" + str(i + 1)
@@ -51,7 +53,8 @@ def login():
         for usuario_bd in USUARIOS:
             if usuario_bd["usuario"] == usuario and usuario_bd["contrasena"] == contrasena:
                 return redirect(url_for("perfil", id=usuario_bd["id"]))
-        error = "Nombre de usuario o contraseña incorrectos"
+
+        error = "Credenciales inválidas. Por favor, inténtalo de nuevo."
     return render_template("index.html", error=error)
 
 
@@ -69,7 +72,14 @@ def perfil(id):
     if request.method == "POST":
         usuario_bd["nombre"] = request.form["nombre"]
         usuario_bd["club"] = request.form["club"]
-        return redirect(url_for("perfil", id=id))
+        return redirect(url_for("perfil", id=id))         
+    if usuario_bd["usuario"] == "admin":
+        return render_template( "perfil.html", usuario_actual=usuario_bd, comment=os.environ.get("COMMENT_ADMIN") )
+    elif usuario_bd["usuario"] == "DSA":
+        return render_template("perfil.html", usuario_actual=usuario_bd, comment=os.environ.get("COMMENT_DSA"))
+    elif usuario_bd["usuario"] == "user":
+        return render_template("perfil.html", usuario_actual=usuario_bd, comment=os.environ.get("COMMENT_USER"))
+                   
     return render_template("perfil.html", usuario_actual=usuario_bd)
 
 @app.route("/buscar", methods=["GET"])
@@ -78,9 +88,9 @@ def buscar():
     if "club" in request.args:
         club = request.args.get("club")
         db = Database()
-        resultados = db.buscar_por_club(club)  # <-- función nueva que agregás ahora
+        resultados = db.buscar_por_club(club) 
     return render_template("buscar.html", resultados=resultados)
-
+    
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", debug=True)
 
