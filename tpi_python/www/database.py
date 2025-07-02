@@ -28,5 +28,5 @@ class Database(object):
         result = connection.execute(sql, {"club_name": club_name}).fetchall()
         lista = []
         for r in result:
-            lista.append({'id': r[0], 'nombre': r[1], 'partidos': r[2]})
+            lista.append({'id': r[0], 'nombre': r[1], 'ciudad': r[2]})
         return lista
